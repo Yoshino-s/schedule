@@ -1,0 +1,79 @@
+[
+  {
+    "course": "高数",
+    "teacher": "赵涌鑫",
+    "description": "微信群组功能 PPT音频",
+    "href": {
+      "大夏学堂": "https://elearning.ecnu.edu.cn/webapps/blackboard/execute/modulepage/view?course_id=_6135_1&cmp_tab_id=_22693_1&mode=view"
+    }
+  }, {
+    "course": "语文",
+    "teacher": "陶霞波",
+    "description": "大夏学堂 PPT录课+大夏学堂互动",
+    "href": {}
+  }, {
+    "course": "网球",
+    "teacher": "张勇",
+    "description": "大夏学堂 录播",
+    "href": {}
+  }, {
+    "course": "英语",
+    "teacher": "朱正",
+    "description": "大夏学堂，批改网 PPT等教学材料阅读、在线作文提交批改、在线讨论交流指导",
+    "href": {
+      "大夏学堂": "https://elearning.ecnu.edu.cn/webapps/blackboard/execute/modulepage/view?course_id=_7282_1&cmp_tab_id=_24358_1&mode=view"
+    }
+  }, {
+    "course": "Linux",
+    "teacher": "叶健",
+    "description": "超星泛雅 ppt音频",
+    "href": {}
+  }, {
+    "course": "实训",
+    "teacher": "张民",
+    "description": "大夏学堂上以反转课堂的方式 ppt音频",
+    "href": {
+      "大夏学堂": "https://elearning.ecnu.edu.cn/webapps/blackboard/execute/modulepage/view?course_id=_7585_1&cmp_tab_id=_24945_1&mode=view"
+    }
+  }, {
+    "course": "服务器",
+    "teacher": "金健",
+    "description": "超星泛雅 录播、PPT和在线操作辅导相结合",
+    "href": {
+      "超星": "https://mooc1-1.chaoxing.com/mycourse/studentcourse?courseId=206450526&clazzid=12999545&vc=1&cpi=115386427&enc=cc26e148a757ae0b1e79b742c08ccc90"
+    }
+  }, {
+    "course": "近代史",
+    "teacher": "吴原元",
+    "description": "爱课程 录播",
+    "href": {}
+  }, {
+    "course": "离散",
+    "teacher": "朱惠彪",
+    "description": "爱课程 交大离散数学 并通过微信等开展学习指导",
+    "href": {}
+  }, {
+    "course": "算法实践",
+    "teacher": "杜育根",
+    "description": "QQ群，直播",
+    "href": {
+      "QQ群": "https://shang.qq.com/wpa/qunwpa?idkey=389d14b45b148fa44ff7cb4128407c903f93c8a3b5f604049035c9012c422e4a",
+      "超星": "https://mooc1-1.chaoxing.com/mycourse/studentcourse?courseId=206811616&clazzid=13717459&vc=1&cpi=115386427&enc=14e6c2244988dd6203434a7182e0b5b2"
+    }
+  }, {
+    "course": "算法",
+    "teacher": "杜育根",
+    "description": "QQ群，直播",
+    "href": {
+      "QQ群": "https://shang.qq.com/wpa/qunwpa?idkey=389d14b45b148fa44ff7cb4128407c903f93c8a3b5f604049035c9012c422e4a",
+      "超星": "https://mooc1-1.chaoxing.com/mycourse/studentcourse?courseId=206811702&clazzid=13717618&vc=1&cpi=115386427&enc=44b8ed891d69fe189b4b58e852a58bdc"
+    }
+  }, {
+    "course": "计组",
+    "teacher": "刘献忠",
+    "description": "大夏学堂 ppt音频，录播",
+    "href": {
+      "大夏学堂": "https://elearning.ecnu.edu.cn/webapps/blackboard/execute/modulepage/view?course_id=_7621_1&cmp_tab_id=_25003_1&mode=view"
+    }
+  }
+]

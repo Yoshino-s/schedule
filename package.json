@@ -1,0 +1,44 @@
+{
+  "name": "pro1",
+  "version": "0.0.1",
+  "description": "A Quasar Framework app",
+  "productName": "Quasar App",
+  "cordovaId": "org.cordova.quasar.app",
+  "capacitorId": "",
+  "author": "Yoshino-s <yoshino.prog@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "quasar dev -m pwa",
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.5.1",
+    "axios": "^0.18.1",
+    "dayjs": "^1.8.20",
+    "quasar": "^1.9.2",
+    "xlsx": "^0.15.5"
+  },
+  "devDependencies": {
+    "@quasar/app": "^1.5.8",
+    "@quasar/quasar-app-extension-typescript": "^1.0.0-beta.2",
+    "@types/node": "11.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "@vue/eslint-config-airbnb": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.10.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-vue": "^5.0.0",
+    "typescript": "^3.7.4"
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.6.0",
+    "yarn": ">= 1.6.0"
+  },
+  "browserslist": [
+    "last 1 version, not dead, ie >= 11"
+  ]
+}
