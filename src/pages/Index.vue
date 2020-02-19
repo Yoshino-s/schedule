@@ -16,7 +16,7 @@
         </q-card>
         <q-card style="width: 100%">
           <q-card-section>
-            <Clock :dark="$q.dark.isActive" :size="clockSize" format="HH:MM" style="height: 100% font-size: 2px"/>
+            <Clock :dark="$q.dark.isActive" :size="clockSize" format="HH:MM:SS" style="height: 100% font-size: 2px"/>
           </q-card-section>
         </q-card>
         <q-table
@@ -177,7 +177,7 @@ export default class Index extends Vue {
   }
 
   resize() {
-    this.clockSize = parseInt(getComputedStyle(this.$refs.left as Element).width.slice(0, -2)) * 0.6 / 5;
+    this.clockSize = parseInt(getComputedStyle(this.$refs.left as Element).width.slice(0, -2)) * 0.55 / 8;
   }
 
   parse() {
