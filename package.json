@@ -11,6 +11,7 @@
     "start": "quasar dev -m pwa",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
     "test": "echo \"No test specified\" && exit 0",
+    "push": "git push origin && git push coding-origin",
     "deploy": "quasar build -m pwa && scripts/deploy.sh"
   },
   "dependencies": {
