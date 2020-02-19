@@ -1,26 +1,27 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="row q-gutter-md" style="min-width: 40%; width: 100%; margin-bottom: 20px;">
-      <div class="col q-gutter-y-md">
-        <div class="row">
-          <q-card style="width: 100%">
-            <q-card-section>
-              选择你的课表
-              <a href='/课表.xlsx'>(样例)</a>
-              <q-file
-                v-model="tab"
-                label="课表"
-                dense
-                filled
-                @input="upload"
-                accept=".xls, .xlsx"
-              />
-            </q-card-section>
-          </q-card>
-        </div>
+    <div class="row q-col-gutter-md" style="min-width: 40%; margin: 10px auto; max-width: 90%">
+      <div class="col-12 col-sm q-gutter-y-md" ref="left">
+        <q-card style="width: 100%">
+          <q-card-section>
+            选择你的课表
+            <a href="/statics/课表.xlsx">(样例)</a>
+            <q-file v-model="tab" label="课表" dense filled @input="upload" accept=".xls, .xlsx" />或者从链接导入(需要支持跨域且为https)
+            <q-input label="链接" filled dense v-model="tabLink">
+              <template v-slot:after>
+                <q-btn icon="done" round flat @click="uploadLink"/>
+              </template>
+            </q-input>
+          </q-card-section>
+        </q-card>
+        <q-card style="width: 100%">
+          <q-card-section>
+            <Clock :dark="$q.dark.isActive" :size="clockSize" format="HH:MM" style="height: 100% font-size: 2px"/>
+          </q-card-section>
+        </q-card>
         <q-table
+          style="width: 100%"
           v-if="data.length"
-          class="row"
           dense
           separator="vertical"
           title="课表"
@@ -41,7 +42,11 @@
           </template>
         </q-table>
       </div>
-      <div class="col-4 q-gutter-y-md" v-if="schedule.courses.length" style="min-height: calc(100vh - 50px - 40px)">
+      <div
+        class="col-12 col-sm-4"
+        v-if="schedule.courses.length"
+        style="min-height: calc(100vh - 50px - 40px)"
+      >
         <q-card class="row">
           <q-card-section>
             <q-timeline color="primary" layout="dense">
@@ -93,57 +98,98 @@ import * as XLSX from 'xlsx';
 import parseSchedule, { Schedule, TimeRange } from '../utils/parseSchedule';
 import dayjs from 'dayjs';
 import defaultSchedule from '../utils/def';
+import Clock from '../components/Clock.vue';
 
 const chi2Num = (s: string) => ['一','二','三','四','五'].indexOf(s)+1;
 const num2Chi = (n: number) => ['一','二','三','四','五'][n-1];
 
-@Component
+type TableData = {
+  id: string,
+  time: string,
+  timeRange: TimeRange,
+  [k: number]: string,
+}
+type Column = {
+  name: string,
+  align?: string,
+  label: string,
+  field: string
+}
+
+type Props = {
+  row?: TableData,
+  col: Column,
+  cols?: Column[]
+}
+
+@Component({
+  components:{Clock}
+})
 export default class Index extends Vue {
   tab = new File([], '');
+  tabLink = '/statics/课表.xlsx';
   columns = [
     { name: 'id', align: 'center', label: '节次', field: 'id' },
     { name: 'time', align: 'center', label: '时间', field: 'time' },
-    { name: 'mon', align: 'center', label: '周一', field: 'mon' },
-    { name: 'tue', align: 'center', label: '周二', field: 'tue' },
-    { name: 'wed', align: 'center', label: '周三', field: 'wed' },
-    { name: 'thu', align: 'center', label: '周四', field: 'thu' },
-    { name: 'fri', align: 'center', label: '周五', field: 'fri' },
+    { name: 'mon', align: 'center', label: '周一', field: '1' },
+    { name: 'tue', align: 'center', label: '周二', field: '2' },
+    { name: 'wed', align: 'center', label: '周三', field: '3' },
+    { name: 'thu', align: 'center', label: '周四', field: '4' },
+    { name: 'fri', align: 'center', label: '周五', field: '5' },
   ];
-  data: any[] = [];
+  data: TableData[] = [];
   day = new Date().getDay() - 1;
+
+  currentTime = dayjs();
 
   schedule: Schedule = defaultSchedule;
 
-  upload() {
-    const reader = new FileReader();
-    reader.onload = e => {
-      if(!e.target)
-        throw Error('Cannot read file.');
-      const data = e.target.result;
-      const wb = XLSX.read(data, {
-        type: 'binary'
-      });
-      this.schedule = parseSchedule(wb.Sheets[wb.SheetNames[0]]);
-      this.parse();
-    }
-    reader.readAsBinaryString(this.tab);
+  async uploadLink() {
+    const file = await (await fetch(this.tabLink)).blob();
+    await this.upload(file);
   }
 
-  mounted() {
+  async upload(file: Blob) {
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    const e = await (new Promise<ProgressEvent<FileReader>>(res => {
+      reader.onload = e => res(e);
+    }));
+    if(!e.target)
+      throw Error('Cannot read file.');
+    const data = e.target.result;
+    const wb = XLSX.read(data, {
+      type: 'binary'
+    });
+    this.schedule = parseSchedule(wb.Sheets[wb.SheetNames[0]]);
     this.parse();
   }
 
+  clockSize = 60;
+
+  mounted() {
+    this.uploadLink();
+    setInterval(() => {
+      this.currentTime = dayjs();
+    },1000);
+    document.addEventListener('resize', () => this.resize());
+    this.resize();
+  }
+
+  resize() {
+    this.clockSize = parseInt(getComputedStyle(this.$refs.left as Element).width.slice(0, -2)) * 0.6 / 5;
+  }
+
   parse() {
-    const d: any[] = this.schedule.timeline.map(v => ({
+    const d: TableData[] = this.schedule.timeline.map(v => ({
       id: v.name,
       time: v.timeString,
       timeRange: v.time
     }));
-    const vk = ['mon', 'tue', 'wed', 'thu', 'fri'];
     this.schedule.courses.forEach((v, i) => {
       v.forEach(c => {
         c.duration.forEach(du => {
-          (d as any)[du][vk[i]] = c.id;
+          d[du][i+1] = c.id;
         })
       })
     });
@@ -152,6 +198,7 @@ export default class Index extends Vue {
 
   getColor(course: TimeRange) {
     const time = dayjs();
+    console.log(time.valueOf(),course.start.valueOf(),course.end.valueOf());
     if(time < course.start)
       return 'blue';
     if(time > course.end)
@@ -166,7 +213,7 @@ export default class Index extends Vue {
       return 'check_box';
     return 'play_circle_outline';
   }
-  getStyle(props: any) {
+  getStyle(props: Props) {
     const color = this.$q.dark.isActive ? 'rgb(50, 50, 50)' : 'rgb(230, 230, 230)';
     return {
       cursor: 'pointer',
@@ -189,6 +236,4 @@ export default class Index extends Vue {
 </script>
 
 <style lang="sass" scoped>
-.timeline
-  width: 200px
 </style>

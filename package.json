@@ -10,7 +10,8 @@
   "scripts": {
     "start": "quasar dev -m pwa",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "deploy": "quasar build -m pwa && scripts/deploy.sh"
   },
   "dependencies": {
     "@quasar/extras": "^1.5.1",
